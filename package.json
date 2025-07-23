@@ -1,0 +1,28 @@
+{
+  "name": "openapi-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "node scripts/generate-api.js",
+    "generate:clean": "rm -rf src/generated && mkdir -p src/generated",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.21.3",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.1.0",
+    "@types/node-fetch": "^2.6.12",
+    "fs-extra": "^11.3.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}

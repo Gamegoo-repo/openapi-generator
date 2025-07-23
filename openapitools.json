@@ -1,0 +1,11 @@
+{
+  "generator-cli": {
+    "version": "7.0.1",
+    "generators": {
+      "typescript-fetch": {
+        "generatorName": "typescript-fetch",
+        "output": "./src/generated"
+      }
+    }
+  }
+}
