@@ -89,7 +89,7 @@ export class HomeControllerApi extends runtime.BaseAPI implements HomeController
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -125,7 +125,7 @@ export class HomeControllerApi extends runtime.BaseAPI implements HomeController
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -161,7 +161,7 @@ export class HomeControllerApi extends runtime.BaseAPI implements HomeController
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;

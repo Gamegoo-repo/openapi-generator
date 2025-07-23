@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 
+// 환경변수 로드
+require('dotenv').config()
+
 const fs = require('fs-extra')
 const path = require('path')
 const { spawn } = require('child_process')
 
 // ===== 설정 부분 - 여기를 수정하세요! =====
 const CONFIG = {
-  // Swagger JSON 파일 경로 또는 URL
-  swaggerInput: './swagger/swagger.json', // 로컬 파일
-  // swaggerInput: 'http://localhost:3000/api-docs-json',  // URL 사용시
+  // Swagger JSON 파일 경로 또는 URL (.env에서 API_BASE_URL 사용)
+  swaggerInput: process.env.API_BASE_URL
+    ? `${process.env.API_BASE_URL}/v3/api-docs`
+    : './swagger/swagger.json', // fallback to local file
 
   // 출력 디렉토리
   outputDir: './src/generated',
@@ -138,12 +142,18 @@ async function downloadSwaggerJson(url, outputPath) {
 async function generateApiClient() {
   try {
     log('API 클라이언트 생성을 시작합니다...')
+    log(
+      `📌 API_BASE_URL: ${
+        process.env.API_BASE_URL || '환경변수 없음 (로컬 파일 사용)'
+      }`
+    )
 
     // 1. 입력 파일 처리
     let inputSpecPath
 
     if (CONFIG.swaggerInput.startsWith('http')) {
       // URL에서 다운로드
+      log(`🌐 원격 API 문서에서 가져오기: ${CONFIG.swaggerInput}`)
       inputSpecPath = path.join(CONFIG.projectRoot, 'temp-swagger.json')
       await downloadSwaggerJson(CONFIG.swaggerInput, inputSpecPath)
     } else {
@@ -152,7 +162,7 @@ async function generateApiClient() {
       if (!(await fs.pathExists(inputSpecPath))) {
         throw new Error(`Swagger 파일을 찾을 수 없습니다: ${inputSpecPath}`)
       }
-      log(`로컬 Swagger 파일 사용: ${inputSpecPath}`)
+      log(`📄 로컬 Swagger 파일 사용: ${inputSpecPath}`)
     }
 
     // 2. 출력 디렉토리 준비

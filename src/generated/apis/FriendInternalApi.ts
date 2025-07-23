@@ -67,7 +67,7 @@ export class FriendInternalApi extends runtime.BaseAPI implements FriendInternal
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;

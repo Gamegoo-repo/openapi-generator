@@ -3263,13 +3263,13 @@ export interface FriendInfoResponse {
      * @type {boolean}
      * @memberof FriendInfoResponse
      */
-    blind?: boolean;
+    liked?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof FriendInfoResponse
      */
-    liked?: boolean;
+    blind?: boolean;
 }
 /**
  * 
@@ -4294,37 +4294,6 @@ export interface MemberRecentStatsResponse {
      * @memberof MemberRecentStatsResponse
      */
     recTotalCs?: number;
-}
-/**
- * 
- * @export
- * @interface ModelApiResponse
- */
-export interface ModelApiResponse {
-    /**
-     * HTTP status code
-     * @type {number}
-     * @memberof ModelApiResponse
-     */
-    status: number;
-    /**
-     * Response message
-     * @type {string}
-     * @memberof ModelApiResponse
-     */
-    message: string;
-    /**
-     * Response code
-     * @type {string}
-     * @memberof ModelApiResponse
-     */
-    code: string;
-    /**
-     * Response data
-     * @type {any}
-     * @memberof ModelApiResponse
-     */
-    data?: any | null;
 }
 /**
  * 

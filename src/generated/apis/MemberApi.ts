@@ -24,10 +24,6 @@ import type {
   ProfileImageRequest,
 } from '../models/index';
 
-export interface 1Request {
-    positionRequest: PositionRequest;
-}
-
 export interface AddGameStyleRequest {
     gameStyleRequest: GameStyleRequest;
 }
@@ -45,6 +41,10 @@ export interface ModifyIsMikeRequest {
 }
 
 export interface ModifyPositionRequest {
+    positionRequest: PositionRequest;
+}
+
+export interface ModifyProfileImageRequest {
     profileImageRequest: ProfileImageRequest;
 }
 
@@ -59,22 +59,6 @@ export interface RevokeAdminRoleRequest {
  * @interface MemberApiInterface
  */
 export interface MemberApiInterface {
-    /**
-     * API for Main/Sub/Want Position Modification
-     * @summary 주/부/원하는 포지션 수정 API 입니다.
-     * @param {PositionRequest} positionRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MemberApiInterface
-     */
-    _1Raw(requestParameters: 1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiResponseString>>;
-
-    /**
-     * API for Main/Sub/Want Position Modification
-     * 주/부/원하는 포지션 수정 API 입니다.
-     */
-    _1(requestParameters: 1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString>;
-
     /**
      * API for Gamestyle addition and modification 
      * @summary gamestyle 추가 및 수정 API 입니다.
@@ -155,9 +139,9 @@ export interface MemberApiInterface {
     modifyIsMike(requestParameters: ModifyIsMikeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString>;
 
     /**
-     * API for Profile Image Modification
-     * @summary 프로필 이미지 수정 API 입니다.
-     * @param {ProfileImageRequest} profileImageRequest 
+     * API for Main/Sub/Want Position Modification
+     * @summary 주/부/원하는 포지션 수정 API 입니다.
+     * @param {PositionRequest} positionRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MemberApiInterface
@@ -165,10 +149,26 @@ export interface MemberApiInterface {
     modifyPositionRaw(requestParameters: ModifyPositionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiResponseString>>;
 
     /**
+     * API for Main/Sub/Want Position Modification
+     * 주/부/원하는 포지션 수정 API 입니다.
+     */
+    modifyPosition(requestParameters: ModifyPositionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString>;
+
+    /**
+     * API for Profile Image Modification
+     * @summary 프로필 이미지 수정 API 입니다.
+     * @param {ProfileImageRequest} profileImageRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MemberApiInterface
+     */
+    modifyProfileImageRaw(requestParameters: ModifyProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiResponseString>>;
+
+    /**
      * API for Profile Image Modification
      * 프로필 이미지 수정 API 입니다.
      */
-    modifyPosition(requestParameters: ModifyPositionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString>;
+    modifyProfileImage(requestParameters: ModifyProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString>;
 
     /**
      * API for refreshing champion statistics
@@ -209,49 +209,6 @@ export interface MemberApiInterface {
 export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
     /**
-     * API for Main/Sub/Want Position Modification
-     * 주/부/원하는 포지션 수정 API 입니다.
-     */
-    async _1Raw(requestParameters: 1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiResponseString>> {
-        if (requestParameters.positionRequest === null || requestParameters.positionRequest === undefined) {
-            throw new runtime.RequiredError('positionRequest','Required parameter requestParameters.positionRequest was null or undefined when calling _1.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v2/profile/position`,
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.positionRequest,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response);
-    }
-
-    /**
-     * API for Main/Sub/Want Position Modification
-     * 주/부/원하는 포지션 수정 API 입니다.
-     */
-    async _1(requestParameters: 1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString> {
-        const response = await this._1Raw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * API for Gamestyle addition and modification 
      * gamestyle 추가 및 수정 API 입니다.
      */
@@ -268,7 +225,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -313,7 +270,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -349,7 +306,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -389,7 +346,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -431,7 +388,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -458,12 +415,12 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
     }
 
     /**
-     * API for Profile Image Modification
-     * 프로필 이미지 수정 API 입니다.
+     * API for Main/Sub/Want Position Modification
+     * 주/부/원하는 포지션 수정 API 입니다.
      */
     async modifyPositionRaw(requestParameters: ModifyPositionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiResponseString>> {
-        if (requestParameters.profileImageRequest === null || requestParameters.profileImageRequest === undefined) {
-            throw new runtime.RequiredError('profileImageRequest','Required parameter requestParameters.profileImageRequest was null or undefined when calling modifyPosition.');
+        if (requestParameters.positionRequest === null || requestParameters.positionRequest === undefined) {
+            throw new runtime.RequiredError('positionRequest','Required parameter requestParameters.positionRequest was null or undefined when calling modifyPosition.');
         }
 
         const queryParameters: any = {};
@@ -474,7 +431,50 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v2/profile/position`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.positionRequest,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * API for Main/Sub/Want Position Modification
+     * 주/부/원하는 포지션 수정 API 입니다.
+     */
+    async modifyPosition(requestParameters: ModifyPositionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString> {
+        const response = await this.modifyPositionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * API for Profile Image Modification
+     * 프로필 이미지 수정 API 입니다.
+     */
+    async modifyProfileImageRaw(requestParameters: ModifyProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiResponseString>> {
+        if (requestParameters.profileImageRequest === null || requestParameters.profileImageRequest === undefined) {
+            throw new runtime.RequiredError('profileImageRequest','Required parameter requestParameters.profileImageRequest was null or undefined when calling modifyProfileImage.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -495,8 +495,8 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
      * API for Profile Image Modification
      * 프로필 이미지 수정 API 입니다.
      */
-    async modifyPosition(requestParameters: ModifyPositionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString> {
-        const response = await this.modifyPositionRaw(requestParameters, initOverrides);
+    async modifyProfileImage(requestParameters: ModifyProfileImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiResponseString> {
+        const response = await this.modifyProfileImageRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -511,7 +511,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
@@ -551,7 +551,7 @@ export class MemberApi extends runtime.BaseAPI implements MemberApiInterface {
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
-            const tokenString = await token("JWT_TOKEN", []);
+            const tokenString = await token("JWT TOKEN", []);
 
             if (tokenString) {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
